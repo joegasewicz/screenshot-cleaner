@@ -36,7 +36,6 @@ func createCleanPathFromUserSelection(menuSelection *string, userRoot *string) (
 	}
 }
 
-
 func main() {
 	var cleanDirPath string
 	var screenShotFileNames []string
@@ -45,6 +44,7 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Printf("Screenshot Cleaner\n")
+	fmt.Printf("==================\n\n")
 	fmt.Printf("Which directory would you like to clean:\n")
 	fmt.Printf("1. Desktop\n")
 	fmt.Printf("2. Downloads\n")
@@ -61,7 +61,7 @@ func main() {
 		return
 	}
 
-	fmt.Printf("Clean %s - is this correct? [Y/N]\n", cleanDirPath)
+	fmt.Printf("Clean all screenshot files in %s - is this correct? [Y/N]\n", cleanDirPath)
 	cleanConfirmText, _ := reader.ReadString('\n')
 	cleanConfirmText = strings.ToLower(strings.ReplaceAll(cleanConfirmText, "\n", ""))
 	if cleanConfirmText == "n" {
@@ -75,7 +75,7 @@ func main() {
 		fmt.Printf("There was an error, exiting...")
 		return
 	}
-	fmt.Printf("Files in to clean in %s\n", cleanDirPath)
+	fmt.Printf("\n[Screenshot files in %s]:\n\n", cleanDirPath)
 
 	for _, file := range files {
 		// Get all files with a `Screenshot` substring & .png filetype
@@ -88,7 +88,7 @@ func main() {
 			}
 		}
 	}
-	fmt.Printf("The above files will be delete from the %s folder\n", userDirName)
+	fmt.Printf("The above files will be deleted from the %s folder\n", userDirName)
 	fmt.Printf("Do you want to proceed with the deletions: [Y/N]\n")
 	cleanConfirm, _ := reader.ReadString('\n')
 	cleanConfirm = strings.ToLower(strings.ReplaceAll(cleanConfirm, "\n", ""))
