@@ -97,12 +97,26 @@ func main() {
 		fmt.Printf("Exiting...\n")
 		return
 	}
+	// slice of file names that couldn't be deleted
+	// for some reason.
+	// TODO it would be better if we checked user permissions
+	// before even trying to delete the file.
+	var persistingFiles []string
 	for _, file := range screenShotFileNames {
 		err := os.Remove(cleanDirPath + "/" + file)
 		if err != nil {
-			// TODO build slices of file that couldn't be removed
-			fmt.Printf("Error deleting %s", file)
+			persistingFiles = append(persistingFiles, file)
+			continue
 		}
 	}
+	if len(persistingFiles) > 0 {
+		listPersistingFiles(persistingFiles)
+	}
 	fmt.Printf("Successfully removed files")
+}
+
+func listPersistingFiles(fileNames []string) {
+	for _, f := range fileNames {
+		fmt.Printf("file %s couldn't be removed\n", f)
+	}
 }
